@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 require('dotenv').config();
+require('./utilities/mongo-config');
 
 const passport = require('passport');
 const passportConfig = require('./utilities/passport-config');

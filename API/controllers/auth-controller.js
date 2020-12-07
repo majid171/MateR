@@ -1,7 +1,7 @@
 const passport = require('passport');
 
 // Google OAuth2
-exports.GoogleAuth = passport.authenticate('google', { scope: ['profile'] });
+exports.GoogleAuth = passport.authenticate('google', {scope: ['openid', 'profile', 'email']});
 exports.GoogleAuthCallback = passport.authenticate('google');
 
 // Facebook OAuth2
