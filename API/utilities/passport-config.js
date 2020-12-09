@@ -16,7 +16,11 @@ passportLoginHelper = async (id, firstName, lastName, email) => {
             firstName: firstName,
             lastName: lastName,
             email: email
-        }).save();
+        }).save()
+            .catch(err => {
+                console.error(err);
+                return done(err);
+            });
     }
 
     return user;
@@ -35,7 +39,7 @@ exports.config = (passport) => {
         new GoogleStrategy({
             clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
             clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-            callbackURL: `${process.env.HOST_NAME}/auth/google/callback`,
+            callbackURL: `${process.env.API_URL}/auth/google/callback`,
             profileFields: ['id', 'emails', 'name']
         }, async (accessToken, refreshToken, profile, done) => {
             let user = passportLoginHelper(profile.id, profile.given_name, profile.family_name, profile.email);
@@ -47,7 +51,7 @@ exports.config = (passport) => {
         new FacebookStrategy({
             clientID: process.env.FACEBOOK_AUTH_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
-            callbackURL: `${process.env.HOST_NAME}/auth/facebook/callback`,
+            callbackURL: `${process.env.API_URL}/auth/facebook/callback`,
             profileFields: ['id', 'emails', 'name']
         }, (accessToken, refreshToken, profile, done) => {
             let user = passportLoginHelper(profile.id, profile.name.givenName, profile.name.familyName, profile.emails[0].value);

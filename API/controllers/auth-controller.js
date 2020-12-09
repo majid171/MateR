@@ -10,5 +10,5 @@ exports.FacebookAuthCallback = passport.authenticate('facebook');
 
 // Redirecting to home
 exports.redirectToHome = (req, res) =>{
-    res.redirect('/');
+    res.redirect(process.env.FRONTEND_URL);
 }

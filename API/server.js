@@ -4,6 +4,8 @@ const app = express();
 require('dotenv').config();
 require('./utilities/mongo-config');
 
+const cors = require('cors');
+
 const passport = require('passport');
 const passportConfig = require('./utilities/passport-config');
 passportConfig.config(passport);
@@ -14,13 +16,16 @@ const routes = {
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+}));
 
 // Routes
 app.use('/auth', routes.auth);
 
 // TEMP
 app.get('/', (req, res) => {
-    res.sendStatus(200);
+    res.send('yo');
 })
 
 // Temp
