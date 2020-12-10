@@ -3,36 +3,15 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 
 const User = require('../models/user-model');
 
-passportLoginHelper = async (id, firstName, lastName, email) => {
-    let user = await User.findOne({ id: id })
-        .catch(err => {
-            console.error(err);
-        }
-        );
-
-    if (!user) {
-        user = new User({
-            id: id,
-            firstName: firstName,
-            lastName: lastName,
-            email: email
-        }).save()
-            .catch(err => {
-                console.error(err);
-                return done(err);
-            });
-    }
-
-    return user;
-}
-
 exports.config = (passport) => {
     passport.serializeUser((user, done) => {
-        done(null, user);
+        done(null, user.id);
     });
 
-    passport.deserializeUser((user, done) => {
-        done(null, user);
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => {
+            done(err, user);
+        });
     });
 
     passport.use(
@@ -42,7 +21,22 @@ exports.config = (passport) => {
             callbackURL: `${process.env.API_URL}/auth/google/callback`,
             profileFields: ['id', 'emails', 'name']
         }, async (accessToken, refreshToken, profile, done) => {
-            let user = passportLoginHelper(profile.id, profile.given_name, profile.family_name, profile.email);
+            let user = await User.findOne({ id: profile.id })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (!user) {
+                user = await new User({
+                    id: profile.id,
+                    firstName: profile.given_name,
+                    lastName: profile.family_name,
+                    email: profile.email
+                }).save().catch(err => {
+                    console.log(err);
+                });
+            }
+
             return done(null, user);
         })
     );
@@ -53,8 +47,23 @@ exports.config = (passport) => {
             clientSecret: process.env.FACEBOOK_AUTH_CLIENT_SECRET,
             callbackURL: `${process.env.API_URL}/auth/facebook/callback`,
             profileFields: ['id', 'emails', 'name']
-        }, (accessToken, refreshToken, profile, done) => {
-            let user = passportLoginHelper(profile.id, profile.name.givenName, profile.name.familyName, profile.emails[0].value);
+        }, async (accessToken, refreshToken, profile, done) => {
+            let user = await User.findOne({ id: profile.id })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+            if (!user) {
+                user = await new User({
+                    id: profile.id,
+                    firstName: profile.givenName,
+                    lastName: profile.familyName,
+                    email: profile.emails[0].value
+                }).save().catch(err => {
+                    console.log(err);
+                });
+            }
+
             return done(null, user);
         })
     );
