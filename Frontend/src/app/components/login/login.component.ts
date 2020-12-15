@@ -14,11 +14,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  loginWithGoogle(){
-    this.auth.loginWithGoogle();
+  signInWithGoogle(e){
+    e.preventDefault();
+    this.auth.signInWithGoogle();
   }
 
-  loginWithFacebook(){
-    this.auth.loginWithGoogle();
+  signInWithFacebook(e){
+    e.preventDefault();
+    this.auth.signInWithFacebook();
   }
 }
