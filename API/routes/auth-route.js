@@ -8,4 +8,6 @@ router.get('/google/callback', authController.GoogleAuthCallback, authController
 router.get('/facebook', authController.FacebookAuth);
 router.get('/facebook/callback', authController.FacebookAuthCallback, authController.redirectToHome);
 
+router.get('/signout', authController.signOut);
+
 module.exports = router;
