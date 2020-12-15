@@ -18,9 +18,4 @@ export class LoginComponent implements OnInit {
     e.preventDefault();
     this.auth.signInWithGoogle();
   }
-
-  signInWithFacebook(e){
-    e.preventDefault();
-    this.auth.signInWithFacebook();
-  }
 }

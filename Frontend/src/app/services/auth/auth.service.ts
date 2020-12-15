@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from './../../../environments/environment';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,18 +17,24 @@ export class AuthService {
     window.location.href = ENDPOINT;
   }
 
-  signInWithFacebook() {
-    const ENDPOINT: string = environment.API_URL + '/auth/facebook';
-    window.location.href = ENDPOINT;
-  }
-
   signOut(): Observable<any> {
     const ENDPOINT: string = environment.API_URL + '/auth/signout';
     return this.http.get(ENDPOINT);
   }
 
   user(): Observable<any> {
-    // TODO: Call api endpoint to check if authenticated
-    return new Observable<any>();
+    const ENDPOINT: string = environment.API_URL + '/auth/verify';
+
+    const headers: HttpHeaders = new HttpHeaders({
+      'Content-type': 'application/json',
+      "Access-Control-Allow-Origin" : "true"
+    });
+
+    return this.http.get<any>(ENDPOINT, {
+      withCredentials: true,
+      headers: headers
+      // observe: 'response',
+      // withCredentials: true
+    });
   }
 }
