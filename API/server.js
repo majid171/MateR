@@ -6,8 +6,8 @@ require('./utilities/mongo-config');
 
 const cors = require('cors');
 
-const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const passport = require('passport');
 const passportConfig = require('./utilities/passport-config');
@@ -17,14 +17,19 @@ const routes = {
     auth: require('./routes/auth-route'),
 }
 
-app.use(cookieSession({
-    keys: [process.env.COOKIE_KEY],
-}))
 app.use(cookieParser());
 
+app.use(session({
+    secret: process.env.COOKIE_KEY,
+    cookie: {secure: false},
+    resave: false,
+    saveUninitialized: false,
+}));
 
 app.use((req, res, next) =>{
     res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With', 'content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
     next();

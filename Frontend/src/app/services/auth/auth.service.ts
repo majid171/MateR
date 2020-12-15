@@ -19,7 +19,16 @@ export class AuthService {
 
   signOut(): Observable<any> {
     const ENDPOINT: string = environment.API_URL + '/auth/signout';
-    return this.http.get(ENDPOINT);
+    
+    const headers: HttpHeaders = new HttpHeaders({
+      'Content-type': 'application/json',
+      "Access-Control-Allow-Origin" : "true"
+    });
+    
+    return this.http.get<any>(ENDPOINT, {
+      headers: headers,
+      withCredentials: true
+    });
   }
 
   user(): Observable<any> {
@@ -31,10 +40,8 @@ export class AuthService {
     });
 
     return this.http.get<any>(ENDPOINT, {
-      withCredentials: true,
-      headers: headers
-      // observe: 'response',
-      // withCredentials: true
+      headers: headers,
+      withCredentials: true
     });
   }
 }
