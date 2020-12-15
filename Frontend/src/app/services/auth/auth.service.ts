@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { environment } from '../../environments/environment';
+import { environment } from './../../../environments/environment';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -25,5 +25,10 @@ export class AuthService {
   signOut(): Observable<any> {
     const ENDPOINT: string = environment.API_URL + '/auth/signout';
     return this.http.get(ENDPOINT);
+  }
+
+  user(): Observable<any> {
+    // TODO: Call api endpoint to check if authenticated
+    return new Observable<any>();
   }
 }
