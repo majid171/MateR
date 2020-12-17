@@ -6,7 +6,8 @@ exports.GoogleAuthCallback = passport.authenticate('google', { successRedirect: 
 
 // Signing out
 exports.signOut = (req, res) => {
-    res.clearCookie('connect.sid');
+    res.clearCookie('express:sess.sig');
+    res.clearCookie('express:sess');
     res.json('signed out');
 }
 

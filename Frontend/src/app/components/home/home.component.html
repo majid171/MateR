@@ -1,2 +1,11 @@
-<p>home works!</p>
-<button (click)="signOut($event)">Logout</button>
+<div class="container">
+    <div class="header">
+        <h1 class="title">Image Repository</h1>
+        <button class="logoutButton" (click)="signOut($event)">Logout</button>
+    </div>
+    <div class="form-group">
+        <input type="file" class=file (change)="uploadImage($event)" multiple="multiple" />
+    </div>
+    <div class="images-contaoner">
+    </div>
+</div>
