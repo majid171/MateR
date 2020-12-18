@@ -12,20 +12,20 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  uploadImage(files): Observable<any> {
-    const ENDPOINT: string = environment.API_URL + '/api/upload';
-    console.log(files);
-    const jsonFiles = JSON.stringify(files);
-
-    const headers: HttpHeaders = new HttpHeaders({
-      'Content-type': 'application/json',
-      'Access-Control-Allow-Origin' : 'true'
+  uploadImages(files): Observable<any> {
+    
+    this.getPreSignedURL('jpg').subscribe((res) => {
+      console.log(res);
+    }, err => {
+      console.log(err);
     });
+    
+    return new Observable();
+  }
 
-    return this.http.post<any>(ENDPOINT, jsonFiles, {
-      headers: headers,
-      observe: 'response',
-      withCredentials: true,
-    });
+  getPreSignedURL(type): Observable<any> {
+    const s3PresignedURLEndpoint = environment.API_URL + '/s3?type=' + type;
+
+    return this.http.get<any>(s3PresignedURLEndpoint, {withCredentials: true});
   }
 }

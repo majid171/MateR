@@ -1,12 +1,20 @@
 const Image = require('../models/image-model');
 
-exports.uploadImage = async(req, res) => {
+exports.uploadImages = async(req, res) => {
     // console.log(req.body);
-    const images = req.body;
+    // const images = req.body;
 
-    for(let i = 0; i < images.length; i++){
-        
-    }
+    // console.log(req.user);
+
+    // for(let i = 0; i < images.length; i++){
+    //     new Image({
+    //         userId: req.user._id,
+    //         url: images[i],
+    //         createdDate: Date.now()
+    //     }).save().catch(err => {
+    //         console.log(err);
+    //     })
+    // }
 
     res.json('ok');
 }

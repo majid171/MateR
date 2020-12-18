@@ -12,11 +12,13 @@ const cookieSession = require('cookie-session');
 
 const passport = require('passport');
 const passportConfig = require('./utilities/passport-config');
+const router = require('./routes/auth-route');
 passportConfig.config(passport);
 
 const routes = {
     auth: require('./routes/auth-route'),
-    api: require('./routes/api-route')
+    api: require('./routes/api-route'),
+    s3: require('./routes/s3-route')
 }
 
 app.use(cookieParser());
@@ -44,6 +46,7 @@ app.use(cors({
 // Routes
 app.use('/auth', routes.auth);
 app.use('/api', routes.api);
+app.use('/s3', routes.s3);
 
 app.listen(process.env.BACKEND_PORT, () => {
     console.log(`Listening on port ${process.env.BACKEND_PORT}`);
