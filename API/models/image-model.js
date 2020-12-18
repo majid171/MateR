@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const imageSchema = new Schema({
     userId: {type: String, required: true},
-    url: {type: String, required: true},
-    createdDate: {type: Date, required: true}
+    fileName: {type: String, required: true},
+    created: {type: Date, required: true}
 });
 
 const Image = mongoose.model('image', imageSchema);

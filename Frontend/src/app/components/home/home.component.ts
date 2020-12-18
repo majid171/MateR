@@ -41,42 +41,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // async uploadImage(event) {
-
-  //   let fileList = event.target.files;
-
-  //   if (!this.validateImages(fileList)) return;
-
-  //   const base64List = await this.fileListToBase64(fileList)
-
-  //   this.api.uploadImage(base64List).subscribe((res) => {
-  //     console.log(res);
-  //   }, err => {
-  //     console.log(err);
-  //   });
-  // }
-
-  // async fileListToBase64(fileList) {
-
-  //   const promises = [];
-
-  //   for (let i = 0; i < fileList.length; i++) {
-  //     promises.push(this.getBase64(fileList[i]));
-  //   }
-
-  //   return await Promise.all(promises);
-  // }
-
-  // getBase64(file) {
-  //   const reader = new FileReader();
-  //   return new Promise(resolve => {
-  //     reader.onload = ev => {
-  //       resolve(ev.target.result)
-  //     }
-  //     reader.readAsDataURL(file)
-  //   })
-  // }
-
   validateImages(fileList) {
     if (!fileList[0] || fileList[0].length == 0) {
       return false;

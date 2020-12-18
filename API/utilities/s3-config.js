@@ -1,11 +1,11 @@
 const aws = require('aws-sdk');
 const uuid = require('uuid');
 
-exports.getPreSignedURL = async (type) => {
+exports.getPreSignedURL = async (type, fileName) => {
     
     const params = {
         Bucket: process.env.AWS_BUCKET,
-        Key: uuid.v4() + '.' + type,
+        Key: fileName,
         ContentType: type,
         Expires: 100
     }
