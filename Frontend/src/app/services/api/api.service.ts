@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
+  ENDPOINT = environment.API_URL + '/api/';
+
   constructor(private http: HttpClient) { }
 
   uploadImages(files): Observable<any> {
@@ -55,7 +57,6 @@ export class ApiService {
   }
 
   persistUploadToDB(fileName) {
-    const ENDPOINT = environment.API_URL + '/api/';
 
     const body = {fileName};
 
@@ -64,7 +65,7 @@ export class ApiService {
       'Access-Control-Allow-Origin' : 'true'
     });
 
-    return this.http.post(ENDPOINT, body, {
+    return this.http.post(this.ENDPOINT, body, {
       headers: headers,
       withCredentials: true,
       observe: 'response'
@@ -73,5 +74,12 @@ export class ApiService {
 
   getFileType(file): String {
     return file.name.split('.')[1].toLowerCase();
+  }
+
+  getAllImagesFromDB(){
+    return this.http.get(this.ENDPOINT, {
+      withCredentials: true,
+      observe: 'response'
+    });
   }
 }
