@@ -25,16 +25,27 @@ exports.config = (passport) => {
                     console.log(err);
                 });
 
+            const date = Date.now();
+
             if (!user) {
                 user = await new User({
                     id: profile.id,
                     firstName: profile.given_name,
                     lastName: profile.family_name,
-                    email: profile.email
-                }).save().catch(err => {
-                    console.log(err);
+                    email: profile.email,
+                    created: date,
+                    lastLoggedIn: date
                 });
             }
+            else {
+                user.lastLoggedIn = date;
+            }
+
+            user.save()
+                .catch(err => {
+                    console.log(err);
+                });
+
             done(null, user);
         })
     );
