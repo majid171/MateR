@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ApiService } from '../../services/api/api.service';
 
+import { Image } from '../../models/image';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,15 +13,14 @@ import { ApiService } from '../../services/api/api.service';
 })
 export class HomeComponent implements OnInit {
 
-  url;
   buildList = [];
-  validImageTypes = ['jpg'];
+  imageListFromDB: Image[];
 
   constructor(private auth: AuthService, private router: Router, private api: ApiService) { }
 
   ngOnInit(): void {
     this.api.getAllImagesFromDB().subscribe((res) => {
-      console.log(res);
+      console.log(res.body);
     }, err => {
       console.log(err);
     });
@@ -35,30 +36,44 @@ export class HomeComponent implements OnInit {
   }
 
   async uploadImage(event) {
+
     let fileList = event.target.files;
 
-    if (!this.validateImages(fileList)) return;
+    const base64List = await this.fileListToBase64(fileList);
 
-    this.api.uploadImages(fileList).subscribe((res) => {
+    let jsonList = [];
+    for(var i = 0; i < fileList.length; i++){
+      jsonList.push({
+        fileName: fileList[i].name,
+        data: base64List[i]
+      });
+    }
+
+    this.api.uploadImage(jsonList).subscribe((res) => {
       console.log(res);
     }, err => {
-      console.log(err)
+      console.log(err);
     });
   }
 
-  validateImages(fileList) {
-    if (!fileList[0] || fileList[0].length == 0) {
-      return false;
-    }
+  async fileListToBase64(fileList) {
+
+    const promises = [];
 
     for (let i = 0; i < fileList.length; i++) {
-      var ext = fileList[i].name.split('.')[1].toLowerCase();
-      if (!this.validImageTypes.includes(ext)) {
-        return false;
-      }
+      promises.push(this.getBase64(fileList[i]));
     }
 
-    return true;
+    return await Promise.all(promises);
   }
 
+  getBase64(file) {
+    const reader = new FileReader();
+    return new Promise(resolve => {
+      reader.onload = ev => {
+        resolve(ev.target.result)
+      }
+      reader.readAsDataURL(file)
+    })
+  }
 }
