@@ -14,8 +14,8 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getAllImagesFromDB(){
-    return this.http.get(this.ENDPOINT, {
+  getAllImagesFromDB(): Observable<any> {
+    return this.http.get<any>(this.ENDPOINT, {
       withCredentials: true,
       observe: 'response'
     });
@@ -26,7 +26,7 @@ export class ApiService {
 
     const headers: HttpHeaders = new HttpHeaders({
       'Content-type': 'application/json',
-      'Access-Control-Allow-Origin' : 'true'
+      'Access-Control-Allow-Origin': 'true'
     });
 
     return this.http.post<any>(this.ENDPOINT, jsonFiles, {

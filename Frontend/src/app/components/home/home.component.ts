@@ -13,14 +13,13 @@ import { Image } from '../../models/image';
 })
 export class HomeComponent implements OnInit {
 
-  buildList = [];
   imageListFromDB: Image[];
 
   constructor(private auth: AuthService, private router: Router, private api: ApiService) { }
 
   ngOnInit(): void {
     this.api.getAllImagesFromDB().subscribe((res) => {
-      console.log(res.body);
+      this.imageListFromDB = res.body;
     }, err => {
       console.log(err);
     });

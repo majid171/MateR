@@ -1,24 +1,6 @@
-const s3 = require('../utilities/s3-config');
-
 const Image = require('../models/image-model');
 
 const VALID_TYPES = ['jpg', 'jpeg', 'png'];
-
-exports.persistImage = async (req, res) => {
-
-    const fileName = req.body.fileName;
-
-    let img = await new Image({
-        userId: req.user._id,
-        fileName: fileName,
-        created: Date.now()
-    }).save()
-        .catch(e => {
-            console.log(e);
-        });
-
-    res.json(img);
-}
 
 exports.getImages = async (req, res) => {
     
@@ -52,5 +34,5 @@ exports.uploadImage = async (req, res) => {
         imgList.push(img);
     }
 
-    res.json(imgList);
+    res.json({imgList});
 }
