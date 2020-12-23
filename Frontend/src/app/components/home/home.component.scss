@@ -34,3 +34,14 @@ input[type="file"] {
     color: transparent;
     margin-left: 10px;
 }
+
+.imageContainer{
+    width: 300px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.image{
+    max-width:100%;
+    max-height:100%;
+}

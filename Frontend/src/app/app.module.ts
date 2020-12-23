@@ -10,14 +10,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCardModule } from '@angular/material/card';
 import { HomeComponent } from './components/home/home.component';
-import { ImageComponent } from './components/image/image/image.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
-    ImageComponent
+    HomeComponent  
   ],
   imports: [
     BrowserModule,

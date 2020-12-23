@@ -7,5 +7,21 @@
         <input type="file" class=file (change)="uploadImage($event)" multiple="multiple" />
     </div>
     <div class="images-contaoner">
+        <div *ngFor="let image of imageListFromDB">
+            <div class="imageContainer">
+                <div>
+                    <img src={{image.data}} class="image"/>
+                </div>
+                <div class="footerContainer">
+                    <div>{{image.created}}</div>
+                    <div class="fileName">
+                        <p class="fileNameText">{{image.fileName}}</p>
+                    </div>
+                    <div class="deleteButtonContainer">
+                        <button class="deleteButton">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -13,7 +13,7 @@ import { Image } from '../../models/image';
 })
 export class HomeComponent implements OnInit {
 
-  imageListFromDB: Image[];
+  public imageListFromDB: Image[];
 
   constructor(private auth: AuthService, private router: Router, private api: ApiService) { }
 
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     const base64List = await this.fileListToBase64(fileList);
 
     let jsonList = [];
-    for(var i = 0; i < fileList.length; i++){
+    for (var i = 0; i < fileList.length; i++) {
       jsonList.push({
         fileName: fileList[i].name,
         data: base64List[i]
