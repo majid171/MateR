@@ -11,18 +11,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { HomeComponent } from './components/home/home.component';
 
+import {TimeAgoPipe} from './pipes/timeAgo/time-ago.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent  
+    HomeComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

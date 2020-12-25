@@ -82,9 +82,9 @@ export class HomeComponent implements OnInit {
     this.api.deleteImage(image).subscribe((res) => {
       if (res.status == 200) {
         this.imageListFromDB.forEach((img, index) => {
-          if(img._id == image._id){
+          if (img._id == image._id) {
             this.imageListFromDB.splice(index, 1);
-          }  
+          }
         })
       }
     }), (err) => {
