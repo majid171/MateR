@@ -1,5 +1,5 @@
 export interface Image{
-    id: String,
+    _id: String,
     userId: String,
     fileName: String,
     created: Date,

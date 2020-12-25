@@ -6,5 +6,6 @@ const authMiddleware = require('../middleware/auth-middleware');
 
 router.post('/', authMiddleware.isAuthenticated, apiController.uploadImage);
 router.get('/', authMiddleware.isAuthenticated, apiController.getImages);
+router.delete('/:imageId', authMiddleware.isAuthenticated, apiController.deleteImage);
 
 module.exports = router;

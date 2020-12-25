@@ -35,4 +35,20 @@ export class ApiService {
       withCredentials: true,
     });
   }
+
+  deleteImage(image): Observable<any> {
+
+    const headers: HttpHeaders = new HttpHeaders({
+      'Content-type': 'application/json',
+      'Access-Control-Allow-Origin': 'true'
+    });
+
+    const deleteURL = `${this.ENDPOINT}${image._id}`;
+
+    return this.http.delete(deleteURL, {
+      headers: headers,
+      observe: 'response',
+      withCredentials: true,      
+    });
+  }
 }

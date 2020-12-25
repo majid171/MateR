@@ -22,7 +22,7 @@ exports.uploadImage = async (req, res) => {
 
         if(!VALID_TYPES.includes(ext)) continue;
 
-        let img = new Image({
+        let img = await new Image({
             userId: req.user._id,
             fileName: fileName,
             created: Date.now(),
@@ -34,5 +34,18 @@ exports.uploadImage = async (req, res) => {
         imgList.push(img);
     }
 
-    res.json({imgList});
+    res.json(imgList);
+}
+
+exports.deleteImage = async (req, res) => {
+    const imageId = req.params.imageId;
+    let error = null;
+    
+    Image.findOneAndDelete({_id: imageId}, (err, _) => {
+        if(err) error = err;
+    });
+
+    if(error) res.sendStatus(500);
+
+    res.json(200);
 }
